@@ -1,2 +1,2 @@
 Main-Class: dataman.Main
-Class-Path: lib/
+Class-Path: .

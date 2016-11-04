@@ -1,0 +1,31 @@
+<project default="dist" basedir="../..">
+
+  <property name="src" location="src" />
+  <property name="build" location="build" />
+  <property name="dist" location="dist" />
+
+  <target name="dist">
+    <mkdir dir="${dist}" />
+    <jar destfile="${dist}/tdg.jar"
+        manifest="${src}/main/assets/MANIFEST.MF">
+      <zipfileset dir="${build}/java">
+        <include name="dataman/**/*" />
+        <exclude name="dataman/**/*Test*" />
+      </zipfileset>
+    </jar>
+    <zip destfile="${dist}/tdg.zip">
+      <zipfileset dir="${dist}" prefix="tdg">
+        <include name="tdg.jar"/>
+      </zipfileset>
+      <zipfileset dir="${build}/java" prefix="tdg">
+        <include name="config.js" />
+        <include name="common.js" />
+      </zipfileset>
+    </zip>
+  </target>
+
+  <target name="clean">
+    <delete dir="${dist}" />
+  </target>
+
+</project>
