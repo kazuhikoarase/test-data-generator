@@ -10,7 +10,8 @@ var console = {
       }
       msg += arguments[i];
     }
-    java.lang.System.out.println(msg);
+    var System = Java.type('java.lang.System');
+    System.out.println(msg);
     main.getConsole().log(msg);
   }
 };
@@ -39,7 +40,8 @@ var pattern = function() {
 };
 
 var sqlName = function(name) {
-  return Packages.dataman.model.SqlName(name);
+  var SqlName = Java.type('dataman.model.SqlName');
+  return new SqlName(name);
 };
 
 // intf
@@ -82,7 +84,8 @@ var getUserRowData = function(tableName, rowNum, dataMap, caseId) {
   }
   data = project.getUserRowData(tableName, rowNum, data,
       caseId != null? '' + caseId : null);
-  var map = java.util.HashMap();
+  var HashMap = Java.type('java.util.HashMap');
+  var map = new HashMap();
   if (data) {
     for (var k in data) {
       map.put('' + k, data[k]);
@@ -102,13 +105,15 @@ var getDeleteKeys = function(tableName) {
     return deleteKeys;
   } else if (typeof deleteKeys == 'object') {
     if (typeof deleteKeys.splice == 'function') {
-      var keySet = java.util.HashSet();
+      var HashSet = Java.type('java.util.HashSet');
+      var keySet = new HashSet();
       for (var i = 0; i < deleteKeys.length; i += 1) {
         keySet.add(deleteKeys[i]);
       }
       return keySet;
     } else {
-      var map = java.util.HashMap();
+      var HashMap = Java.type('java.util.HashMap');
+      var map = new HashMap();
       for (var k in deleteKeys) {
         map.put('' + k, deleteKeys[k]);
       }

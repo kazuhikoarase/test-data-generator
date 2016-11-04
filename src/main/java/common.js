@@ -1,4 +1,17 @@
 
+if (typeof Java == 'undefined') {
+  Java = {
+      type : function(className) {
+        var path = className.split(/\./g);
+        var cls = Packages;
+        for (var i = 0; i < path.length; i += 1) {
+          cls = cls[path[i]];
+        }
+        return cls;
+      }
+  };
+}
+
 var assertEquals = function(expected, actual) {
   if (expected !== actual) {
     console.log('expected ' + expected + ' but ' + actual);
@@ -58,7 +71,8 @@ var getLastDateOfMonth = function(sdate) {
 };
 
 var random = function() {
-  var rand = java.util.Random(0);
+  var Random = Java.type('java.util.Random');
+  var rand = new Random(0);
   return function() {
     return +rand.nextDouble();
   };

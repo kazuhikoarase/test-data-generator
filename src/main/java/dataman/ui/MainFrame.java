@@ -3,6 +3,7 @@ package dataman.ui;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Image;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.dnd.DnDConstants;
@@ -32,6 +33,7 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.swing.AbstractAction;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
@@ -79,10 +81,15 @@ public class MainFrame extends JFrame{
 
   private JFileChooser chooser;
   private File lastFile;
-  
+
   public MainFrame() throws Exception {
 
-    //TODO icons
+    List<Image> icons = new ArrayList<Image>();
+    icons.add(new ImageIcon(
+        getClass().getResource(assetsPrefix + "/grid.png") ).getImage() );
+    icons.add(new ImageIcon(
+        getClass().getResource(assetsPrefix + "/grid32x.png") ).getImage() );
+    setIconImages(icons);
 
     consoleManager = new ConsoleManagerUI();
     console = consoleManager.getConsole(ConsoleManagerUI.CONSOLE_DEFAULT);
