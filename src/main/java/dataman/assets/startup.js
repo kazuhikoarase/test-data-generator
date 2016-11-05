@@ -26,8 +26,11 @@ var console = {
     }
     main.addDataSource(ds.name, ds.driverClassName, ds.url, info);
   }
-  if (config.sample) {
-    main.initSample(config.sample.dataSource);
+  for (var i = 0; i < config.dataSources.length; i += 1) {
+    var ds = config.dataSources[i];
+    if (ds.initSample) {
+      main.initSample(ds.name);
+    }
   }
 }();
 

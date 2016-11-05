@@ -6,7 +6,8 @@ var config = {
       name : 'TDGDB',
       url : 'jdbc:hsqldb:mem:tdgdb',
       driverClassName : 'org.hsqldb.jdbcDriver',
-      info : { user : 'SA', password : '' }
+      info : { user : 'SA', password : '' },
+      initSample : true
     }
     /*
     {
@@ -16,11 +17,6 @@ var config = {
       info : { user : 'my', password : 'name' }
     },*/
   ],
-
-  // sample database.
-  sample : {
-    dataSource : 'TDGDB'
-  },
 
   /**
    *  colInfo = {
