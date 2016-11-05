@@ -9,13 +9,12 @@ var config = {
       info : { user : 'SA', password : '' },
       initSample : true
     }
-    /*
-    {
+    /*,{
       name : 'mydb',
-      url : 'jdbc:buzzzzzzzzzzzzzzzzzzz',
-      driverClassName : 'buzzzzzzzzzzzzzzzzzzz',
-      info : { user : 'my', password : 'name' }
-    },*/
+      url : 'jdbc:foo:bar/DB',
+      driverClassName : 'foo.bar.Driver',
+      info : { user : 'foo', password : 'bar' }
+    }*/
   ],
 
   /**
