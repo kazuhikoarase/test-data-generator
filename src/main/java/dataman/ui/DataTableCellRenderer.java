@@ -20,8 +20,6 @@ import dataman.model.SqlName;
 @SuppressWarnings("serial")
 public class DataTableCellRenderer extends DefaultTableCellRenderer {
 
-  private static final int[] mod = { 0, 1, 3, 2 };
-
   public DataTableCellRenderer() {
   }
 
@@ -29,7 +27,9 @@ public class DataTableCellRenderer extends DefaultTableCellRenderer {
       JLabel label,
       ColumnDef columnDef,
       DataObject value,
-      boolean isSelected) {
+      boolean isSelected
+  ) {
+
     label.setToolTipText(columnDef.getTypeDesc() );
 
     if (value.getValue() instanceof Number) {
@@ -39,9 +39,7 @@ public class DataTableCellRenderer extends DefaultTableCellRenderer {
     }
 
     if (value.getType() == DataObject.TYPE_GENERATED) {
-      Color c = new Color(Color.HSBtoRGB(
-          ( (value.getPatternId() * 3f) % 32) / 32, 0.4f,
-          1 - mod[value.getIndex() % mod.length] * 0.15f) );
+      Color c = Styles.getGeneratedColor(value);
       if (!isSelected) {
         label.setBackground(c);
       } else {
@@ -49,13 +47,13 @@ public class DataTableCellRenderer extends DefaultTableCellRenderer {
       } 
     }
     if (value.getValue() == null) {
-      label.setForeground(Color.LIGHT_GRAY);
+      label.setForeground(Styles.getNullFgColor() );
     } else if (value.getValue() instanceof SqlName) {
-      label.setForeground(Color.BLUE);
+      label.setForeground(Styles.getSqlNameFgColor() );
     }
 
     if (value.getType() == DataObject.TYPE_USER) {
-      label.setForeground(new Color(0xcc0066) );
+      label.setForeground(Styles.getUserFgColor() );
     }
   }
 
@@ -92,8 +90,8 @@ public class DataTableCellRenderer extends DefaultTableCellRenderer {
     }
 
     if (row.isDeleted() ) {
-      label.setForeground(Color.LIGHT_GRAY);
-      label.setBackground(Color.GRAY);
+      label.setForeground(Styles.getDeletedFgColor() );
+      label.setBackground(Styles.getDeletedBgColor() );
     }
 
     return label;

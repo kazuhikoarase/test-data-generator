@@ -6,7 +6,6 @@ import javax.swing.JComponent;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 
-import dataman.core.Util;
 import dataman.model.DataTableModel;
 import dataman.model.TableDef;
 
@@ -39,13 +38,13 @@ implements TableCellRenderer {
 
     DataTableModel model = (DataTableModel)table.getModel();
     if (column < model.getNumColumnExtras() ) {
-      header.setForeground(Util.getSysHeadColor() );
-      header.setBackground(Util.getSysHeadBgColor() );
+      header.setForeground(Styles.getSysHeadColor() );
+      header.setBackground(Styles.getSysHeadBgColor() );
     } else {
       if (tableDef.getColumns().
           get(column - model.getNumColumnExtras() ).isPrimaryKey() ) {
-        header.setForeground(Util.getPkColor() );
-        header.setBackground(Util.getPkBgColor() );
+        header.setForeground(Styles.getPkColor() );
+        header.setBackground(Styles.getPkBgColor() );
       }
     }
 
