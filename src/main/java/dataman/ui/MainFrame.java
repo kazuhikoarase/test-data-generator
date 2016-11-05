@@ -383,7 +383,7 @@ public class MainFrame extends JFrame{
   private void updateTitle(File file) {
     if (file != null) {
       try {
-        setTitle(appName + " - " + file.getCanonicalPath() );
+        setTitle(file.getCanonicalPath() + " - " + appName);
       } catch(IOException e) {
         throw new RuntimeException(e);
       }

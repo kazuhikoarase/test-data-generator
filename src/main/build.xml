@@ -21,6 +21,9 @@
         <include name="config.js" />
         <include name="common.js" />
       </zipfileset>
+      <zipfileset dir="${src}/main/projects" prefix="tdg/projects">
+        <include name="*.js" />
+      </zipfileset>
     </zip>
   </target>
 
