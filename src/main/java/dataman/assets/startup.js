@@ -26,6 +26,7 @@ var console = {
     }
     main.addDataSource(ds.name, ds.driverClassName, ds.url, info);
   }
+
   for (var i = 0; i < config.dataSources.length; i += 1) {
     var ds = config.dataSources[i];
     if (ds.initSample) {
@@ -54,19 +55,19 @@ var assertEquals = function(expected, actual) {
 };
 
 var expand = function() {
-  var expand = function(args) {
+  var expand_ = function(args) {
     for (var i = 0; i < args.length; i += 1) {
       var arg = args[i];
       if (typeof arg == 'object' &&
           typeof arg.splice == 'function') {
-        expand(arg);
+        expand_(arg);
       } else {
         list.push(arg);
       }
     }
   };
   var list = [];
-  expand(arguments);
+  expand_(arguments);
   return list;
 };
 
@@ -92,7 +93,7 @@ var pattern = function() {
   var cols = arguments;
   return function() {
     var vals = arguments;
-    return [cols, toArray(vals)];
+    return [cols, expand(toArray(vals) )];
   }
 };
 

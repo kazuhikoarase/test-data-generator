@@ -44,6 +44,8 @@ var project = {
       } else {
         userData.AMOUNT = Math.floor(random() * 10);
       }
+    } else if (tableName == 'ITEM_MST') {
+      userData.ITEM_NAME = 'Name of ' + data.ITEM_ID;
     }
     userData.CRE_USER = username;
     userData.UPD_USER = username;
