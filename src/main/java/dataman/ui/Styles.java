@@ -5,7 +5,7 @@ import java.awt.Color;
 import dataman.model.DataObject;
 
 /**
- * DataTableCellRenderer
+ * Styles
  * @author kazuhiko arase
  */
 public class Styles {
