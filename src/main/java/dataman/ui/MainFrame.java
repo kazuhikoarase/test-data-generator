@@ -338,7 +338,6 @@ public class MainFrame extends JFrame{
     se.put("main", this);
 
     String[] srcList = {
-//        "/JSON.js",
         "/config.js",
         assetsPrefix + "/startup.js"
     };
