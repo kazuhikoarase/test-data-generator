@@ -199,6 +199,7 @@ public class MainFrame extends JFrame{
         }
       }
     });
+    fileMenu.addSeparator();
     fileMenu.add(new AbstractAction() {
       {
         putValue(NAME, "Test Run");
@@ -250,6 +251,7 @@ public class MainFrame extends JFrame{
         }
       }
     });
+    fileMenu.addSeparator();
     fileMenu.add(new AbstractAction() {
       {
         putValue(NAME, "Exit");
