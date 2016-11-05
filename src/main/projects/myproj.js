@@ -10,7 +10,7 @@ var project = {
   dataSource : 'TDGDB',
   /* optional */
   casePatterns : [
-   'Case1', 'Case2', 'Case3'
+   'Case One', 'Case Two', 'Case Three'
   ],
   patterns : [
     pattern(
