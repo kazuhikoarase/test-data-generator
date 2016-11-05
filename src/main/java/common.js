@@ -1,23 +1,4 @@
 
-if (typeof Java == 'undefined') {
-  Java = {
-      type : function(className) {
-        var path = className.split(/\./g);
-        var cls = Packages;
-        for (var i = 0; i < path.length; i += 1) {
-          cls = cls[path[i]];
-        }
-        return cls;
-      }
-  };
-}
-
-var assertEquals = function(expected, actual) {
-  if (expected !== actual) {
-    console.log('expected ' + expected + ' but ' + actual);
-  }
-};
-
 var numToStr = function(n, digits) {
   digits = digits || 0;
   var s = '' + ~~(+n);

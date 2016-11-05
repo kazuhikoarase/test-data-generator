@@ -34,11 +34,65 @@ var console = {
   }
 }();
 
+if (typeof Java == 'undefined') {
+  Java = {
+      type : function(className) {
+        var path = className.split(/\./g);
+        var cls = Packages;
+        for (var i = 0; i < path.length; i += 1) {
+          cls = cls[path[i]];
+        }
+        return cls;
+      }
+  };
+}
+
+var assertEquals = function(expected, actual) {
+  if (expected !== actual) {
+    console.log('expected ' + expected + ' but ' + actual);
+  }
+};
+
+var expand = function() {
+  var expand = function(args) {
+    for (var i = 0; i < args.length; i += 1) {
+      var arg = args[i];
+      if (typeof arg == 'object' &&
+          typeof arg.splice == 'function') {
+        expand(arg);
+      } else {
+        list.push(arg);
+      }
+    }
+  };
+  var list = [];
+  expand(arguments);
+  return list;
+};
+
+var toArray = function(args) {
+  var list = [];
+  for (var i = 0; i < args.length; i++) {
+    list.push(args[i]);
+  }
+  return list;
+};
+
+assertEquals(2, expand(1, 2).length);
+assertEquals(3, expand(1, [2, 3]).length);
+assertEquals(2, expand([1, 2]).length);
+assertEquals(3, expand([1, [2, 3] ]).length);
+assertEquals(4, expand([1, [2, [3, 4] ] ]).length);
+assertEquals(6, expand([[0, 1], [2, [3, 4] ], 5]).length);
+!function() {
+  assertEquals(3, expand(toArray(arguments) ).length);
+}([1, 2, 3]);
+
 var pattern = function() {
   var cols = arguments;
   return function() {
     var vals = arguments;
-    return [cols, vals];
+    return [cols, toArray(vals)];
   }
 };
 

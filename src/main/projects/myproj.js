@@ -20,7 +20,7 @@ var project = {
     pattern(
       'ITEM_MST.ITEM_ID',
       'STOCK_TBL.ITEM_ID'
-      ).apply(null, itemIdList)
+      )(itemIdList)
   ],
   /* optional (default: delete by primary key) */
   getDeleteKeys : function(tableName) {
