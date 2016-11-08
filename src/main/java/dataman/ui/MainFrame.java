@@ -82,6 +82,8 @@ public class MainFrame extends JFrame{
   private JFileChooser chooser;
   private File lastFile;
 
+  private File workDir = null;
+
   public MainFrame() throws Exception {
 
     List<Image> icons = new ArrayList<Image>();
@@ -369,13 +371,25 @@ public class MainFrame extends JFrame{
     }
   }
 
-  public void evalfile(File path) throws Exception {
-    Reader in =  new InputStreamReader(new FileInputStream(path), "UTF-8");
-    try {
-      se.put(ScriptEngine.FILENAME, path.getPath() );
-      se.eval(in);
+  public Object evalfile(String src) throws Exception {
+
+    final File srcFile = workDir != null?
+        new File(workDir, src) : new File(src);
+
+    // save workDir
+    final File lastWorkDir = workDir;
+    workDir = srcFile.getParentFile();
+    try  {
+      Reader in = new InputStreamReader(new FileInputStream(srcFile), "UTF-8");
+      try {
+        se.put(ScriptEngine.FILENAME, srcFile.getAbsolutePath() );
+        return se.eval(in);
+      } finally {
+        in.close();
+      }
     } finally {
-      in.close();
+      // restore workDir
+      workDir = lastWorkDir;
     }
   }
 
@@ -538,7 +552,8 @@ public class MainFrame extends JFrame{
 
     eval("/common.js");
 
-    evalfile(srcFile);
+    workDir = null;
+    evalfile(srcFile.getPath() );
 
     eval(assetsPrefix + "/loadProject.js");
 

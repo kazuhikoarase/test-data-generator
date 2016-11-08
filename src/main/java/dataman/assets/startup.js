@@ -16,6 +16,10 @@ var console = {
   }
 };
 
+var evalfile = function(src) {
+  return main.evalfile(src);
+};
+
 !function() {
 
   for (var i = 0; i < config.dataSources.length; i += 1) {
