@@ -61,19 +61,19 @@ var config = {
 };
 ```
 
-common.js, config.js, tdg.jar 及び、 jdbcドライバーのライブラリを同一フォルダに配置します。
+common.js, config.js, tdg.jar 及び、 JDBCドライバーのライブラリを同一フォルダに配置します。
 
 ```
-common.js
-config.js
-tdg.jar
-hsqldb.jar
+common.js  -- 共通関数ライブラリ
+config.js  -- 設定ファイル
+tdg.jar    -- ツール本体
+hsqldb.jar -- JDBCドライバー(任意)
 ```
 
 コマンドラインから、tdg を起動します。
 
 ```
-java -cp hsqldb.jar;tdg.jar dataman.Main
+java -cp tdg.jar;hsqldb.jar dataman.Main
 ```
 
 ここで扱うデータ投入先のテーブルの DDL は下記のようなものとします。
@@ -118,7 +118,7 @@ var project = {
 }
 ```
 
-tdgで読み込ませると、下記のようなデータが生成されます。
+tdg にドロップするか、 File - Open から読み込ませると、下記のようなデータが生成されます。
 
 TDG_TEST1
 
