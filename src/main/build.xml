@@ -14,10 +14,13 @@
       </zipfileset>
     </jar>
     <zip destfile="${dist}/tdg.zip">
-      <zipfileset dir="${dist}" prefix="tdg">
+      <zipfileset dir="${src}/main/assets" prefix="tdg/bin">
+        <include name="tdg.*"/>
+      </zipfileset>
+      <zipfileset dir="${dist}" prefix="tdg/lib">
         <include name="tdg.jar"/>
       </zipfileset>
-      <zipfileset dir="${build}/java" prefix="tdg">
+      <zipfileset dir="${build}/java" prefix="tdg/lib">
         <include name="config.js" />
         <include name="common.js" />
       </zipfileset>
