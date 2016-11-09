@@ -61,6 +61,21 @@ var config = {
 };
 ```
 
+common.js, config.js, tdg.jar 及び、 jdbcドライバーのライブラリを同一フォルダに配置します。
+
+```
+common.js
+config.js
+tdg.jar
+hsqldb.jar
+```
+
+コマンドラインから、tdg を起動します。
+
+```
+java -cp hsqldb.jar;tdg.jar dataman.Main
+```
+
 ここで扱うデータ投入先のテーブルの DDL は下記のようなものとします。
 
 ```sql
