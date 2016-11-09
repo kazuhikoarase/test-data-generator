@@ -32,3 +32,27 @@ create table STOCK_TBL (
   UPD_DATE timestamp not null,
   primary key (SHOP_ID,ITEM_ID)
 );
+
+create table TDG_TEST1 (
+  KEY1 char(2) not null,
+  VAL1 char(8),
+  VAL2 char(8),
+  primary key (KEY1)
+);
+
+create table TDG_TEST2 (
+  KEY1 char(2) not null,
+  KEY2 char(4) not null,
+  VAL1 char(8),
+  VAL2 integer,
+  primary key (KEY1,KEY2)
+);
+
+create table TDG_TEST3 (
+  KEY1 char(4) not null,
+  FKEY1 char(2),
+  FKEY2 char(4),
+  VAL1 char(8),
+  VAL2 integer,
+  primary key (KEY1)
+);
