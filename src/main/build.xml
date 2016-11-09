@@ -14,6 +14,9 @@
       </zipfileset>
     </jar>
     <zip destfile="${dist}/tdg.zip">
+      <zipfileset dir="${basedir}" prefix="tdg">
+        <include name="README.md"/>
+      </zipfileset>
       <zipfileset dir="${src}/main/assets" prefix="tdg/bin">
         <include name="tdg.*"/>
       </zipfileset>
