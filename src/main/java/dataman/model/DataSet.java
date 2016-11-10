@@ -58,7 +58,12 @@ public class DataSet {
 
   public Object invokeFunction(String fn, Object... args)
   throws Exception {
-    return script.invokeFunction(fn, args);
+    Object[] _args = new Object[args.length + 1];
+    _args[0] = "_intf." + fn;
+    for (int i = 0; i < args.length; i += 1) {
+      _args[i + 1] = args[i];
+    }
+    return script.invokeFunction("_invokeFunction", _args);
   }
 
   public void setDataSource(String dataSourceName) {
