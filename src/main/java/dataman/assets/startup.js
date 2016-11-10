@@ -139,6 +139,7 @@ var _intf = function() {
     var meta = metaCache[tableName];
     if (!meta) {
       meta = {};
+      meta.tableName = tableName;
       meta.columns = [];
       for (var i = 0; i < tableDef.getColumns().size(); i += 1) {
         var columnDef = tableDef.getColumns().get(i);
