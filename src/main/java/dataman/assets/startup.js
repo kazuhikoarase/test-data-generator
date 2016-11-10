@@ -132,9 +132,38 @@ var _intf = function() {
     return config.getDefaultValue.call(null, colInfo);
   };
 
-  intf.getUserRowData = function(tableName, rowNum, dataMap, caseId) {
+  var metaCache = null;
+
+  var getMeta = function(tableDef) {
+    var tableName = '' + tableDef.getTableName();
+    var meta = metaCache[tableName];
+    if (!meta) {
+      meta = {};
+      meta.columns = [];
+      for (var i = 0; i < tableDef.getColumns().size(); i += 1) {
+        var columnDef = tableDef.getColumns().get(i);
+        meta.columns.push({
+          columnName : '' + columnDef.getColumnName(),
+          typeName : '' + columnDef.getTypeName(),
+          columnSize : +columnDef.getColumnSize(),
+          decimalDigits : +columnDef.getDecimalDigits(),
+          nullable : !!columnDef.isNullable(),
+          primaryKey : !!columnDef.isPrimaryKey()
+        });
+      }
+      metaCache[tableName] = meta;
+    }
+    return meta;
+  };
+
+  intf.reset = function() {
+    metaCache = {};
+  };
+
+  intf.getUserRowData = function(tableDef, rowNum, dataMap, caseId) {
     var entries = dataMap.entrySet().toArray();
     var data = {};
+    data['.meta'] = getMeta(tableDef);
     for (var i = 0; i < entries.length; i += 1) {
       if (entries[i].getValue().getType() != 1) {
         // not generated.
@@ -150,7 +179,9 @@ var _intf = function() {
       }
       data['' + entries[i].getKey()] = value;
     }
-    data = project.getUserRowData(tableName, rowNum, data,
+    data = project.getUserRowData(
+        '' + tableDef.getTableName(),
+        rowNum, data,
         caseId != null? '' + caseId : null);
     var HashMap = Java.type('java.util.HashMap');
     var map = new HashMap();

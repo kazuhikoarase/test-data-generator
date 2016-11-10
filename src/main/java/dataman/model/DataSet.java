@@ -121,6 +121,9 @@ public class DataSet {
   }
 
   public void commit(Console console) throws Exception {
+
+    invokeFunction("reset");
+
     for (Entry<String, Map<String,PatternValues>> tablePat :
         patternMap.entrySet() ) {
       final String tableName = tablePat.getKey();
@@ -209,10 +212,9 @@ public class DataSet {
           value, type, index, patternId) );
     }
 
-
     Map<String,Object> userRowData = (Map<String,Object>)
         invokeFunction("getUserRowData",
-            tableName, rows.size(), dataMap,
+            tableDef, rows.size(), dataMap,
             casePattern != null? casePattern.getId() : null);
 
     DataObjectRow dataRow = new DataObjectRow(
