@@ -1,4 +1,17 @@
 
+if (typeof Java == 'undefined') {
+  Java = {
+      type : function(className) {
+        var path = className.split(/\./g);
+        var cls = Packages;
+        for (var i = 0; i < path.length; i += 1) {
+          cls = cls[path[i]];
+        }
+        return cls;
+      }
+  };
+}
+
 var global = this;
 
 var console = {
@@ -20,6 +33,45 @@ var evalfile = function(src) {
   return main.evalfile(src);
 };
 
+var executeQuery = function(dataSource, sql, maxRows) {
+  var conn = main.getConnection(dataSource);
+  try {
+    var stmt = conn.createStatement();
+    try {
+      if (typeof maxRows != 'undefined') {
+        stmt.setMaxRows(maxRows);
+      }
+      var rs = stmt.executeQuery(sql);
+      try {
+        var meta = rs.getMetaData();
+        var cols = [];
+        for (var i = 0; i < meta.getColumnCount(); i += 1) {
+          cols.push('' + meta.getColumnName(i + 1) );
+        }
+        var list = [];
+        while (rs.next() ) {
+          var row = {};
+          for (var i = 0; i < cols.length; i += 1) {
+            var val = rs.getString(cols[i]);
+            if (val != null) {
+              row[cols[i]] = '' + val;
+            }
+          }
+          list.push(row)
+        }
+        return list;
+      } finally {
+        rs.close();
+      }
+    } finally {
+      stmt.close();
+    }
+  } finally {
+    conn.rollback
+    conn.close();
+  }
+};
+
 !function() {
 
   for (var i = 0; i < config.dataSources.length; i += 1) {
@@ -38,19 +90,6 @@ var evalfile = function(src) {
     }
   }
 }();
-
-if (typeof Java == 'undefined') {
-  Java = {
-      type : function(className) {
-        var path = className.split(/\./g);
-        var cls = Packages;
-        for (var i = 0; i < path.length; i += 1) {
-          cls = cls[path[i]];
-        }
-        return cls;
-      }
-  };
-}
 
 var assertEquals = function(expected, actual) {
   if (expected !== actual) {

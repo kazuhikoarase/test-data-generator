@@ -634,6 +634,10 @@ public class MainFrame extends JFrame{
     console.appendThrowable(e);
   }
 
+  public Connection getConnection(String dataSource) throws Exception {
+    return dsTree.getConnection(dataSource);
+  }
+
   public void initSample(String dataSource) throws Exception {
 
     StringBuilder buf = new StringBuilder();
@@ -649,7 +653,7 @@ public class MainFrame extends JFrame{
       in.close();
     }
 
-    Connection conn = dsTree.getConnection(dataSource);
+    Connection conn = getConnection(dataSource);
     try {
       for (String sql : buf.toString().split(";") ) {
         sql = sql.trim();
