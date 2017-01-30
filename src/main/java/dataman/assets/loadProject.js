@@ -1,6 +1,7 @@
 
 !function() {
-  main.setDataSource(project.dataSource)
+  main.setDataSource(project.dataSource);
+  main.setSchema(typeof project.schema == 'string'? project.schema : null);
   if (project.casePatterns) {
     for (var c = 0; c < project.casePatterns.length; c += 1) {
       main.addCasePattern(project.casePatterns[c]);

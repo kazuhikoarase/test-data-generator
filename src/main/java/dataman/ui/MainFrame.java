@@ -510,6 +510,10 @@ public class MainFrame extends JFrame{
     workDataSet.setDataSource(dataSourceName);
   }
 
+  public void setSchema(String schema) {
+    workDataSet.setSchema(schema);
+  }
+
   public void addCasePattern(String name) {
     casePatterns.add(new CasePattern(
         String.valueOf(casePatterns.size() + 1), name) );

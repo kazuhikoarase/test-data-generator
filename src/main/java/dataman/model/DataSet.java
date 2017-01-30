@@ -34,11 +34,13 @@ public class DataSet {
 
   private Map<String,List<DataObjectRow>> dataMap;
 
-  private CasePattern casePattern;
-
   private final Invocable script;
 
   private final DataSource ds;
+  
+  private String schema;
+
+  private CasePattern casePattern;
 
   public DataSet(Invocable script, DataSource ds) {
     this.script = script;
@@ -54,6 +56,14 @@ public class DataSet {
 
   public void setCasePattern(CasePattern casePattern) {
     this.casePattern = casePattern;
+  }
+
+  public String getSchema() {
+    return schema;
+  }
+
+  public void setSchema(String schema) {
+    this.schema = schema;
   }
 
   public Object invokeFunction(String fn, Object... args)
@@ -272,7 +282,7 @@ public class DataSet {
     if (tableDef == null) {
       Connection conn = ds.getConnection(dataSourceName);
       try {
-        tableDef = TableDef.fromMetaData(conn, null, tableName);
+        tableDef = TableDef.fromMetaData(conn, schema, tableName);
         metaMap.put(tableName, tableDef);
       } finally {
         conn.close();
@@ -375,6 +385,10 @@ public class DataSet {
         for (DataObjectRow row : dataMap.get(tableName) ) {
           StringBuilder buf = new StringBuilder();
           buf.append("delete from ");
+          if (schema != null) {
+            buf.append(schema);
+            buf.append('.');
+          }
           buf.append(tableDef.getTableName() );
           buf.append(" where ");
           int keyCount = 0;
@@ -401,6 +415,10 @@ public class DataSet {
       } else if (deleteKeys instanceof Map<?, ?>) {
         StringBuilder buf = new StringBuilder();
         buf.append("delete from ");
+        if (schema != null) {
+          buf.append(schema);
+          buf.append('.');
+        }
         buf.append(tableDef.getTableName() );
         buf.append(" where ");
         int count = 0;
@@ -418,6 +436,10 @@ public class DataSet {
       } else if (deleteKeys instanceof String) {
         StringBuilder buf = new StringBuilder();
         buf.append("delete from ");
+        if (schema != null) {
+          buf.append(schema);
+          buf.append('.');
+        }
         buf.append(tableDef.getTableName() );
         buf.append(" where ");
         buf.append(deleteKeys);
@@ -432,6 +454,10 @@ public class DataSet {
     for (DataObjectRow row : dataMap.get(tableName) ) {
       StringBuilder buf = new StringBuilder();
       buf.append("delete from ");
+      if (schema != null) {
+        buf.append(schema);
+        buf.append('.');
+      }
       buf.append(tableDef.getTableName() );
       buf.append(" where ");
       int keyCount = 0;
@@ -462,6 +488,10 @@ public class DataSet {
       }
       StringBuilder buf = new StringBuilder();
       buf.append("insert into ");
+      if (schema != null) {
+        buf.append(schema);
+        buf.append('.');
+      }
       buf.append(tableDef.getTableName() );
       buf.append(" (");
       for (int i = 0; i < tableDef.getColumns().size(); i += 1) {
