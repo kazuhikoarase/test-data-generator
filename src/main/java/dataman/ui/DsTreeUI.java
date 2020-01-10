@@ -48,11 +48,6 @@ import dataman.model.MapNode;
  */
 public class DsTreeUI implements DataSource {
 
-  public static final String TABLE_SCHEM = "TABLE_SCHEM";
-  public static final String TABLE_TYPE = "TABLE_TYPE";
-  public static final String TABLE_NAME = "TABLE_NAME";
-  public static final String COLUMN_NAME = "COLUMN_NAME";
-
   private Map<String,DsTreeNode> dsMap;
   private ListTreeNode dsList;
   private JTree tree;
@@ -192,7 +187,7 @@ public class DsTreeUI implements DataSource {
       Object comp = path.getLastPathComponent();
       if (comp instanceof MapNode) {
         MapNode node = (MapNode)comp;
-        if (node.getType().equals(TABLE_NAME) ) {
+        if (node.getType().equals(MapNode.TABLE_NAME) ) {
           final String text = node.toString().toUpperCase();
           final boolean found = (pat != null)?
               pat.matcher(text).find() :
@@ -231,7 +226,7 @@ public class DsTreeUI implements DataSource {
     Object comp = path.getLastPathComponent();
     if (comp instanceof MapNode) {
       MapNode node = (MapNode)comp;
-      if (node.getType().equals(TABLE_NAME) ) {
+      if (node.getType().equals(MapNode.TABLE_NAME) ) {
         Connection conn = getConnection(event.getPath() );
         try {
           DatabaseMetaData meta = conn.getMetaData();
@@ -332,7 +327,7 @@ public class DsTreeUI implements DataSource {
       try {
         ResultSet rs = conn.getMetaData().getSchemas();
         try {
-          update(TABLE_SCHEM, true, rs, node);
+          update(MapNode.TABLE_SCHEM, true, rs, node);
         } finally {
           rs.close();
         }
@@ -351,16 +346,16 @@ public class DsTreeUI implements DataSource {
         ResultSet rs = null;
         boolean allowsChildren = true;
         
-        if (node.getType().equals(TABLE_SCHEM) ) {
-          type = TABLE_TYPE;
+        if (node.getType().equals(MapNode.TABLE_SCHEM) ) {
+          type = MapNode.TABLE_TYPE;
           rs = conn.getMetaData().getTableTypes();
-        } else if (node.getType().equals(TABLE_TYPE) ) {
-          type = TABLE_NAME;
+        } else if (node.getType().equals(MapNode.TABLE_TYPE) ) {
+          type = MapNode.TABLE_NAME;
           rs = conn.getMetaData().getTables(null,
               getTableSchem(path), null,
               new String[]{ getTableType(path) });
           allowsChildren = false;
-        } else if (node.getType().equals(TABLE_NAME) ) {
+        } else if (node.getType().equals(MapNode.TABLE_NAME) ) {
           /*
           type = COLUMN_NAME;
           rs = conn.getMetaData().getColumns(null,

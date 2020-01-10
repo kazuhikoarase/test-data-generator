@@ -9,6 +9,14 @@ import java.util.Map;
  */
 public class MapNode extends ListTreeNode {
 
+  protected static String toMetaName(final String name) {
+    return name.toUpperCase().intern();
+  }
+
+  public static final String TABLE_SCHEM = "TABLE_SCHEM";
+  public static final String TABLE_TYPE = "TABLE_TYPE";
+  public static final String TABLE_NAME = "TABLE_NAME";
+
   private final String type;
 
   private final Map<String,Object> map;
@@ -16,7 +24,7 @@ public class MapNode extends ListTreeNode {
   private final boolean allowsChildren;
 
   public MapNode(String type, boolean allowsChildren) {
-    this.type = type;
+    this.type = toMetaName(type);
     this.allowsChildren = allowsChildren;
     this.map = new HashMap<String, Object>();
   }
@@ -26,11 +34,11 @@ public class MapNode extends ListTreeNode {
   }
 
   public Object get(String name) {
-    return map.get(name);
+    return map.get(toMetaName(name) );
   }
 
   public void put(String name, Object value) {
-    map.put(name, value);
+    map.put(toMetaName(name), value);
   }
 
   @Override
